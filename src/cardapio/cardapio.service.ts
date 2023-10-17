@@ -113,6 +113,7 @@ export class CardapioService {
   }
 
   async findByWeek(week: number): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
+
     const cardapios = await this.prisma.cardapio.findMany({
       where: {
         AND: [

@@ -26,7 +26,7 @@ export class CardapioController {
     return this.cardapioService.cardapiosAno();
   }
 
-  @Get('semana/:date')
+  @Get('semanaDate/:date')
   async getCardapiosBySemana(@Param('date') date: Date): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
     return this.cardapioService.bySemana(new Date(date));
   }
