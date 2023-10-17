@@ -152,10 +152,9 @@ export class CardapioService {
 
     const cardapio = await this.prisma.cardapio.findFirst({
       where: {
-        data: date,
+        data: format(date,"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"),
       },
     });
-    console.log(cardapio);
     if (!cardapio) {
       throw new HttpException('Cardápio não encontrado',
         404);

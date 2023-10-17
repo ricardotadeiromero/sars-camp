@@ -2,7 +2,7 @@ import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common'
 import { CardapioService } from './cardapio.service';
 import { Cardapio } from './model/cardapio';
 
-@Controller('cardapios')
+@Controller('cardapio')
 export class CardapioController {
   constructor(private cardapioService: CardapioService) {}
 
@@ -26,7 +26,7 @@ export class CardapioController {
     return this.cardapioService.cardapiosAno();
   }
 
-  @Get('semanaDate/:date')
+  @Get('semana/data/:date')
   async getCardapiosBySemana(@Param('date') date: Date): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
     return this.cardapioService.bySemana(new Date(date));
   }
@@ -41,17 +41,17 @@ export class CardapioController {
     return this.cardapioService.findByDate(new Date(date));
   }
 
-  @Get('day/:day')
+  @Get('dia/:day')
   async getCardapioByDay(@Param('day') day: number): Promise<Cardapio> {
     return this.cardapioService.findByDay(day);
   }
 
-  @Get('month/:month')
+  @Get('mes/:month')
   async getCardapiosByMonth(@Param('month') month: number): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
     return this.cardapioService.findByMonth(month);
   }
 
-  @Get('year/:year')
+  @Get('ano/:year')
   async getCardapiosByYear(@Param('year') year: number): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
     return this.cardapioService.findByYear(year);
   }
