@@ -362,7 +362,7 @@ model proprietarios {
 
 model user {
   id       Int    @id @default(autoincrement())
-  username String @db.VarChar(45)
+  username String @unique(map: "username_UNIQUE") @db.VarChar(45)
   password String @db.VarChar(255)
 }
 
