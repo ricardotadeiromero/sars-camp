@@ -8,10 +8,11 @@ import * as bcrypt from 'bcryptjs';
 export class UserService {
     constructor(private prisma: PrismaService){}
 
-    async findUser(data:User){
+    async findUser(username:string): Promise<User>{
         const user = await this.prisma.user.findUnique({
-            where: {username:data.username}
+            where: {username}
         })
-        return user;
+    console.log(user);
+    return user;
     }
 }

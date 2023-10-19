@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, Session, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, Session, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
 import { CardapioService } from './cardapio.service';
 import { Cardapio } from './model/cardapio';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('cardapio')
 export class CardapioController {
@@ -32,7 +33,7 @@ export class CardapioController {
   }
 
   @Get('semana/:week')
-  async getCardapiosByWeek(@Param('week') week: number): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
+  async getCardapiosByWeek(@Param('week') week: number): Promise<(Cardapio[])[]> {
     return this.cardapioService.findByWeek(week);
   }
 
@@ -66,18 +67,30 @@ export class CardapioController {
     return this.cardapioService.findAll();
   }
 
+
   @Post()
-  async createCardapio(@Body() cardapio: Cardapio): Promise<void> {
+  async createCardapio(@Body() cardapio: Cardapio,@Session() session: Record<string, any>): Promise<void> {
+    if(!session.username){
+      throw new HttpException("Usuário não autenticado",HttpStatus.UNAUTHORIZED);
+    }
     return this.cardapioService.create(cardapio);
   }
 
+
   @Put()
-  async updateCardapio(@Body() cardapio: Cardapio): Promise<void> {
+  async updateCardapio(@Body() cardapio: Cardapio,@Session() session: Record<string, any>): Promise<void> {
+    if(!session.username){
+      throw new HttpException("Usuário não autenticado",HttpStatus.UNAUTHORIZED);
+    }
     return this.cardapioService.update(cardapio);
   }
 
+
   @Delete(':codigo')
-  async deleteCardapio(@Param('codigo') codigo: number): Promise<void> {
+  async deleteCardapio(@Param('codigo') codigo: number,@Session() session: Record<string, any>): Promise<void> {
+    if(!session.username){
+      throw new HttpException("Usuário não autenticado",HttpStatus.UNAUTHORIZED);
+    }
     const cardapio = await this.cardapioService.findByCodigo(codigo);
     return this.cardapioService.remove(cardapio);
   }

@@ -69,6 +69,23 @@ export class DateService {
     return dates;
   }
 
+  toArray(cardapios: Cardapio[]) {
+    const dateMap = new Map();
+  
+    cardapios.forEach((cardapio) => {
+      const { data } = cardapio;
+       if (dateMap.has(data)) {
+        dateMap.get(data).push(cardapio);
+      } else {
+        dateMap.set(data, [cardapio]);
+      }
+    });
+  
+    const array = [...dateMap.values()];
+  
+    return array;
+  }
+
   async addToYear(cardapios: Cardapio[]): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
     const firstDay = new Date(cardapios[0].data.getFullYear(), 0, 1);
     const lastDay = new Date(firstDay.getFullYear() + 1, 0, 0);

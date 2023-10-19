@@ -112,7 +112,7 @@ export class CardapioService {
     return this.date.addToWeek(cardapios);
   }
 
-  async findByWeek(week: number): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
+  async findByWeek(week: number): Promise<(Cardapio[])[]> {
 
     const cardapios = await this.prisma.cardapio.findMany({
       where: {
@@ -130,8 +130,28 @@ export class CardapioService {
       throw new HttpException('Cardápios não encontrados',404 );
     }
 
-    return this.date.addToWeek(cardapios);
+    return this.date.toArray(cardapios);
   }
+  // async findByWeek(week: number): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
+
+  //   const cardapios = await this.prisma.cardapio.findMany({
+  //     where: {
+  //       AND: [
+  //         { data: { gte: this.date.getWeekStartByWeek(week) } },
+  //         { data: { lte: this.date.getWeekEndByWeek(week) } },
+  //       ],
+  //     },
+  //     orderBy: {
+  //       data: 'asc',
+  //     },
+  //   });
+
+  //   if (!cardapios.length) {
+  //     throw new HttpException('Cardápios não encontrados',404 );
+  //   }
+
+  //   return this.date.addToWeek(cardapios);
+  // }
 
   async findByDate(date: Date): Promise<Cardapio> {
     const cardapio = await this.prisma.cardapio.findFirst({

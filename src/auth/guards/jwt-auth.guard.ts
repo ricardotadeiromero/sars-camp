@@ -37,7 +37,7 @@ import {
   
       return canActivatePromise.catch((error) => {
 
-        throw new UnauthorizedException(error.message);
+        throw new UnauthorizedException(error.messa);
       });
     }
   }

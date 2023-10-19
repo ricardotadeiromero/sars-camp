@@ -8,12 +8,11 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Module({
-  imports: [CardapioModule, UserModule, AuthModule],
+  imports: [ UserModule, AuthModule, CardapioModule],
   controllers: [AppController],
-  providers: [AppService,AppService,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },],
+  providers: [AppService,{
+    provide: APP_GUARD,
+    useClass: JwtAuthGuard,
+  }],
 })
 export class AppModule {}
