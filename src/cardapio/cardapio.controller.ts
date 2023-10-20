@@ -69,28 +69,20 @@ export class CardapioController {
 
 
   @Post()
-  async createCardapio(@Body() cardapio: Cardapio,@Session() session: Record<string, any>): Promise<void> {
-    if(!session.username){
-      throw new HttpException("Usuário não autenticado",HttpStatus.UNAUTHORIZED);
-    }
+  async createCardapio(@Body() cardapio: Cardapio): Promise<void> {
+
     return this.cardapioService.create(cardapio);
   }
 
 
   @Put()
-  async updateCardapio(@Body() cardapio: Cardapio,@Session() session: Record<string, any>): Promise<void> {
-    if(!session.username){
-      throw new HttpException("Usuário não autenticado",HttpStatus.UNAUTHORIZED);
-    }
+  async updateCardapio(@Body() cardapio: Cardapio): Promise<void> {
     return this.cardapioService.update(cardapio);
   }
 
 
   @Delete(':codigo')
-  async deleteCardapio(@Param('codigo') codigo: number,@Session() session: Record<string, any>): Promise<void> {
-    if(!session.username){
-      throw new HttpException("Usuário não autenticado",HttpStatus.UNAUTHORIZED);
-    }
+  async deleteCardapio(@Param('codigo') codigo: number): Promise<void> {
     const cardapio = await this.cardapioService.findByCodigo(codigo);
     return this.cardapioService.remove(cardapio);
   }

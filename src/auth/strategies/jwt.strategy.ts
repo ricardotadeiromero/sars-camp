@@ -2,12 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UserFromJwt } from 'src/user/model/userFromJwt';
+import { Request as RequestType } from 'express';
 import { UserPayload } from 'src/user/model/userPaylod';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        JwtStrategy.extractJWT,
+        ExtractJwt.fromAuthHeaderAsBearerToken()
+      ]),
       ignoreExpiration: false,
       secretOrKey: 'fon',
     });
@@ -18,5 +22,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       id: payload.sub,
       username: payload.username,
     };
+  }
+
+  private static extractJWT(req: RequestType): string | null {
+    if (req.cookies && req.cookies.access_token) {
+      return req.cookies.access_token;
+    }
+    return null;
   }
 }

@@ -257,7 +257,6 @@ export class CardapioService {
   }
 
   async create(cardapio: Cardapio): Promise<void> {
-    const formattedDate = format(cardapio.data, 'yyyy-MM-dd');
 
     try {
       await this.prisma.cardapio.create({
@@ -267,9 +266,9 @@ export class CardapioService {
           salada: cardapio.salada,
           sobremesa: cardapio.sobremesa,
           suco: cardapio.suco,
-          periodo: cardapio.periodo,
-          vegetariano: cardapio.vegetariano,
-          data: formattedDate,
+          periodo: cardapio.periodo? 1 : 0,
+          vegetariano: cardapio.vegetariano? 1 : 0,
+          data: cardapio.data,
         },
       });
     } catch (error) {
@@ -282,7 +281,7 @@ export class CardapioService {
   }
 
   async update(cardapio: Cardapio): Promise<void> {
-    const formattedDate = format(cardapio.data, 'yyyy-MM-dd');
+
 
     try {
       await this.prisma.cardapio.update({
@@ -295,9 +294,9 @@ export class CardapioService {
           salada: cardapio.salada,
           sobremesa: cardapio.sobremesa,
           suco: cardapio.suco,
-          periodo: cardapio.periodo,
-          vegetariano: cardapio.vegetariano,
-          data: formattedDate,
+          periodo: cardapio.periodo? 1 : 0,
+          vegetariano: cardapio.vegetariano? 1 : 0,
+          data: cardapio.data,
         },
       });
     } catch (error) {
