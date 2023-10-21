@@ -9,81 +9,80 @@ export class CardapioController {
 
   @Get('hoje')
   async getCardapioHoje(): Promise<Cardapio> {
-    return this.cardapioService.cardapioHoje();
+    return await this.cardapioService.cardapioHoje();
   }
 
   @Get('semana')
   async getCardapiosSemana(): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
-    return this.cardapioService.cardapiosSemana();
+    return await this.cardapioService.cardapiosSemana();
   }
 
   @Get('mes')
   async getCardapiosMes(): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
-    return this.cardapioService.cardapiosMes();
+    return await this.cardapioService.cardapiosMes();
   }
 
   @Get('ano')
   async getCardapiosAno(): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
-    return this.cardapioService.cardapiosAno();
+    return await this.cardapioService.cardapiosAno();
   }
 
   @Get('semana/data/:date')
   async getCardapiosBySemana(@Param('date') date: Date): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
-    return this.cardapioService.bySemana(new Date(date));
+    return await this.cardapioService.bySemana(new Date(date));
   }
 
   @Get('semana/:week')
   async getCardapiosByWeek(@Param('week') week: number): Promise<(Cardapio[])[]> {
-    return this.cardapioService.findByWeek(week);
+    return await this.cardapioService.findByWeek(week);
   }
 
   @Get('date/:date')
   async getCardapioByDate(@Param('date') date: Date): Promise<Cardapio> {
-    return this.cardapioService.findByDate(new Date(date));
+    return await this.cardapioService.findByDate(new Date(date));
   }
 
   @Get('dia/:day')
   async getCardapioByDay(@Param('day') day: number): Promise<Cardapio> {
-    return this.cardapioService.findByDay(day);
+    return await this.cardapioService.findByDay(day);
   }
 
   @Get('mes/:month')
   async getCardapiosByMonth(@Param('month') month: number): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
-    return this.cardapioService.findByMonth(month);
+    return await this.cardapioService.findByMonth(month);
   }
 
   @Get('ano/:year')
   async getCardapiosByYear(@Param('year') year: number): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
-    return this.cardapioService.findByYear(year);
+    return await this.cardapioService.findByYear(year);
   }
 
   @Get(':codigo')
   async getCardapioByCodigo(@Param('codigo') codigo: number): Promise<Cardapio> {
-    return this.cardapioService.findByCodigo(codigo);
+    return await this.cardapioService.findByCodigo(codigo);
   }
 
   @Get()
   async getAllCardapios(): Promise<Cardapio[]> {
-    return this.cardapioService.findAll();
+    return await this.cardapioService.findAll();
   }
 
 
   @Post()
   async createCardapio(@Body() cardapio: Cardapio): Promise<void> {
 
-    return this.cardapioService.create(cardapio);
+    return await this.cardapioService.create(cardapio);
   }
 
 
   @Put()
   async updateCardapio(@Body() cardapio: Cardapio): Promise<void> {
-    return this.cardapioService.update(cardapio);
+    return await this.cardapioService.update(cardapio);
   }
 
 
-  @Delete(':codigo')
-  async deleteCardapio(@Param('codigo') codigo: number): Promise<void> {
-    const cardapio = await this.cardapioService.findByCodigo(codigo);
-    return this.cardapioService.remove(cardapio);
+  @Delete()
+  async deleteCardapio(@Body() cardapio: Cardapio): Promise<void> {
+    return await this.cardapioService.remove(cardapio);
   }
 }
