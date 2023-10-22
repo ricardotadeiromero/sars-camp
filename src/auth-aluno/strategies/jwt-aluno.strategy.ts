@@ -7,11 +7,11 @@ import { UserPayload } from 'src/user/model/userPaylod';
 import { AlunoPayload } from 'src/aluno/model/alunoPayload';
 import { AlunoFromJwt } from 'src/aluno/model/alunoFromJwt';
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtAlunoStrategy extends PassportStrategy(Strategy,'jwt-aluno') {
   constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
-        JwtStrategy.extractJWT,
+        JwtAlunoStrategy.extractJWT,
         ExtractJwt.fromAuthHeaderAsBearerToken()
       ]),
       ignoreExpiration: false,
@@ -19,14 +19,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: UserPayload): Promise<UserFromJwt> {
+  async validate(payload: AlunoPayload): Promise<AlunoFromJwt> {
     return {
       id: payload.sub,
-      username: payload.username,
+      ra: payload.username,
     };
   }
-
-  
 
   private static extractJWT(req: RequestType): string | null {
     if (req.cookies && req.cookies.access_token) {

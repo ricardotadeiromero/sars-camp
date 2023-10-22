@@ -15,13 +15,6 @@ model Alu_Disci {
   @@map("Alu/Disci")
 }
 
-model Aluno {
-  ra    Int     @id
-  nome  String  @db.VarChar(255)
-  foto  Bytes?
-  curso String? @db.VarChar(15)
-}
-
 model AlunoH {
   ra   Int     @id
   nome String? @db.VarChar(255)
@@ -223,10 +216,10 @@ model Vendas {
 }
 
 model aluno {
-  ra         Int       @id
-  nome       String?   @db.VarChar(45)
-  nascimento DateTime? @db.Date
-  disciplina String?   @db.VarChar(45)
+  id       Int    @id @default(autoincrement())
+  ra       String @unique(map: "ra_UNIQUE") @db.VarChar(45)
+  name     String @db.VarChar(45)
+  password String @db.VarChar(255)
 }
 
 model aluno_intellij {
@@ -371,4 +364,10 @@ model usertest {
   email      String @db.VarChar(45)
   password   String @db.VarChar(255)
   name       String @db.VarChar(45)
+}
+
+model saldo {
+  id      Int     @id @default(autoincrement())
+  idAluno Int     @unique(map: "idAluno_UNIQUE")
+  saldo   Decimal @db.Decimal(10, 0)
 }
