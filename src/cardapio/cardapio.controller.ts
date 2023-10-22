@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, Session, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
 import { CardapioService } from './cardapio.service';
 import { Cardapio } from './model/cardapio';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/user/jwt-auth.guard';
 
 @Controller('cardapio')
 export class CardapioController {

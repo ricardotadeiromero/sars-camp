@@ -8,7 +8,7 @@ import {
   // Password
   import { AuthGuard } from '@nestjs/passport';
   // Decorators
-  import { IS_PUBLIC_KEY } from '../decorators/is-public.decorator';
+  import { IS_PUBLIC_KEY } from '../../decorators/is-public.decorator';
 
   
   @Injectable()
