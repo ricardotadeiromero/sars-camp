@@ -42,7 +42,7 @@ export class CardapioService {
       throw new HttpException('Não há cardápios nesta semana',404);
     }
 
-    return this.date.addToWeek(cardapios);
+    return this.date.toArray(cardapios);
   }
 
   async cardapiosMes(): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
