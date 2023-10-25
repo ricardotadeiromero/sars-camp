@@ -16,6 +16,7 @@ export class JwtAlunoAuthGuard extends AuthGuard('jwt-aluno') {
   handleRequest(err, aluno) {
     // You can throw an exception based on either "info" or "err" arguments
     if (err || !aluno) {
+      
       throw err || new UnauthorizedException();
     }
     return aluno;

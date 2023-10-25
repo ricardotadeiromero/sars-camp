@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 
 @Injectable()
@@ -9,6 +9,9 @@ export class AlunoService {
         const aluno = await this.prisma.aluno.findUnique({
             where: {ra}
         })
+        if(!aluno){
+            throw new NotFoundException('Aluno não encontrado!');
+        }
         return aluno;
     }
 }

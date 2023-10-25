@@ -13,7 +13,8 @@ import {
   
     handleRequest(err, aluno) {
       if (err || !aluno) {
-        throw new UnauthorizedException(err?.message);
+        console.log(err);
+        throw err || new UnauthorizedException();
       }
   
       return aluno;

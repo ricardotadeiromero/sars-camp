@@ -23,6 +23,7 @@ export class JwtAlunoStrategy extends PassportStrategy(Strategy,'jwt-aluno') {
     return {
       id: payload.sub,
       ra: payload.username,
+      name: payload.name,
     };
   }
 

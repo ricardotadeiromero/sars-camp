@@ -367,7 +367,7 @@ model usertest {
 }
 
 model saldo {
-  id      Int     @id @default(autoincrement())
-  idAluno Int     @unique(map: "idAluno_UNIQUE")
-  saldo   Decimal @db.Decimal(10, 0)
+  id      Int   @id @default(autoincrement())
+  idAluno Int   @unique(map: "idAluno_UNIQUE")
+  saldo   Float @db.Float
 }

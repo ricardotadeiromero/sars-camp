@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { User } from 'src/user/model/user';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
@@ -29,6 +29,7 @@ export class AuthService {
         if ("ra" in data) {
             const payload: AlunoPayload = {
                 username: (data as Aluno).ra,
+                name: (data as Aluno).name,
                 sub: (data as Aluno).id
             };
             return {
@@ -59,7 +60,6 @@ export class AuthService {
         const validAluno = await this.alunoService.findAluno(ra);
         if (validAluno) {
             const validPassword = await bcrypt.compare(password, validAluno.password);
-            console.log(validPassword);
             if (validPassword) {
                 return {
                     ...validAluno,
@@ -67,6 +67,6 @@ export class AuthService {
                 }
             }
         }
-        throw new UnauthorizedException('Credenciais inválidas!');
+        
     }
 }
