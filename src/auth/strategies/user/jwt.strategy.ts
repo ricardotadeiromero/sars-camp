@@ -15,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         ExtractJwt.fromAuthHeaderAsBearerToken()
       ]),
       ignoreExpiration: false,
-      secretOrKey: 'fon',
+      secretOrKey: process.env.JWT_SECRET,
     });
   }
 

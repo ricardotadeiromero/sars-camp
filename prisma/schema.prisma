@@ -371,3 +371,11 @@ model saldo {
   idAluno Int   @unique(map: "idAluno_UNIQUE")
   saldo   Float @db.Float
 }
+
+model achadios_perdidos {
+  id       Int      @id @default(autoincrement())
+  material String   @db.VarChar(150)
+  local    String   @db.VarChar(200)
+  campus   Int
+  data     DateTime @db.Date
+}

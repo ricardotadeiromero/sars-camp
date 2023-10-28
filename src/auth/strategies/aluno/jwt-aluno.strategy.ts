@@ -15,7 +15,7 @@ export class JwtAlunoStrategy extends PassportStrategy(Strategy,'jwt-aluno') {
         ExtractJwt.fromAuthHeaderAsBearerToken()
       ]),
       ignoreExpiration: false,
-      secretOrKey: 'fon',
+      secretOrKey: process.env.JWT_SECRET,
     });
   }
 
