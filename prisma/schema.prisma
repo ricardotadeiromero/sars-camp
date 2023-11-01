@@ -62,7 +62,7 @@ model Associado {
 
 model Cardapio {
   codigo      Int      @id @default(autoincrement())
-  data        DateTime @db.Date
+  data        DateTime @db.DateTime(0)
   periodo     Int
   analisado   Int?
   principal   String   @db.VarChar(100)
