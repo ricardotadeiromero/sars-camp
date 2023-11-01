@@ -9,12 +9,11 @@ import { LoginRequestBody } from 'src/user/model/loginRequestBody';
 import { LoginAlunoRequestBody } from 'src/aluno/model/loginAlunoRequestBody';
   
   @Injectable()
-  export class LoginValidationMiddleware implements NestMiddleware {
+  export class LoginAlunoValidationMiddleware implements NestMiddleware {
     async use(req: Request, res: Response, next: NextFunction) {
       const body = req.body;
-  
-      const loginRequestBody = new LoginRequestBody();
-      loginRequestBody.username = body.username;
+      const loginRequestBody = new LoginAlunoRequestBody();
+      loginRequestBody.ra = body.ra;
       loginRequestBody.password = body.password;
       const validations = await validate(loginRequestBody);
   

@@ -1,7 +1,9 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, Session, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
 import { CardapioService } from './cardapio.service';
 import { Cardapio } from './model/cardapio';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/user/jwt-auth.guard';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
+
 
 @Controller('cardapio')
 export class CardapioController {
@@ -12,6 +14,7 @@ export class CardapioController {
     return await this.cardapioService.cardapioHoje();
   }
 
+  @IsPublic()
   @Get('semana')
   async getCardapiosSemana(): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
     return await this.cardapioService.cardapiosSemana();
@@ -32,6 +35,7 @@ export class CardapioController {
     return await this.cardapioService.bySemana(new Date(date));
   }
 
+  @IsPublic()
   @Get('semana/:week')
   async getCardapiosByWeek(@Param('week') week: number): Promise<(Cardapio[])[]> {
     return await this.cardapioService.findByWeek(week);

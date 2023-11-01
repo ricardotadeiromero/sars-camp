@@ -74,13 +74,13 @@ export class DateService {
   
     cardapios.forEach((cardapio) => {
       const { data } = cardapio;
-       if (dateMap.has(data)) {
-        dateMap.get(data).push(cardapio);
+       if (dateMap.has(data.toUTCString())) {
+        dateMap.get(data.toUTCString()).push(cardapio);
       } else {
-        dateMap.set(data, [cardapio]);
+        dateMap.set(data.toUTCString(),[cardapio]);
       }
     });
-  
+    console.log(dateMap);
     const array = [...dateMap.values()];
   
     return array;

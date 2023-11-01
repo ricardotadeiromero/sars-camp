@@ -4,6 +4,8 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UserFromJwt } from 'src/user/model/userFromJwt';
 import { Request as RequestType } from 'express';
 import { UserPayload } from 'src/user/model/userPaylod';
+import { AlunoPayload } from 'src/aluno/model/alunoPayload';
+import { AlunoFromJwt } from 'src/aluno/model/alunoFromJwt';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
@@ -13,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         ExtractJwt.fromAuthHeaderAsBearerToken()
       ]),
       ignoreExpiration: false,
-      secretOrKey: 'fon',
+      secretOrKey: process.env.JWT_SECRET,
     });
   }
 
@@ -23,6 +25,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       username: payload.username,
     };
   }
+
+  
 
   private static extractJWT(req: RequestType): string | null {
     if (req.cookies && req.cookies.access_token) {
