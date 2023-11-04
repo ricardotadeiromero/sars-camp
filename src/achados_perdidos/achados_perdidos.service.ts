@@ -23,4 +23,24 @@ export class AchadosPerdidosService {
             }
         });
     }
+
+    async delete(id: number): Promise<a_p> {
+        const data = await this.prisma.achadios_perdidos.delete({
+            where: { id: id },
+        });
+        if(data){
+            return data;
+        }
+        throw new NotFoundException('Não há itens cadastrados!'); 
+    }
+
+    async update(id: number, data: a_p): Promise<a_p> {
+        return await this.prisma.achadios_perdidos.update({
+            where: { id: id },
+            data: {
+                ...data,
+                data: new Date(),
+            }
+        });
+    }
 }

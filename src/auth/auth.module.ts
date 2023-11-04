@@ -18,7 +18,7 @@ import { LoginAlunoValidationMiddleware } from './middlewares/login-aluno-valida
     AlunoModule,
     PassportModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
+      secret: "fon",
       signOptions: { expiresIn: '30d' },
     }),
   ],
