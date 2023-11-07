@@ -23,4 +23,23 @@ export class AchadosPerdidosService {
             }
         });
     }
+
+    async getById(id: number): Promise<a_p> {
+        return await this.prisma.achadios_perdidos.findUniqueOrThrow({
+            where: {
+                id: id,
+            }
+        });
+    }
+
+    async update(id: number, data: a_p): Promise<a_p> {
+        return await this.prisma.achadios_perdidos.update({
+            where: {
+                id: id,
+            },
+            data: {
+                ...data,
+            }
+        });
+    }
 }

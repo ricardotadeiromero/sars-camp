@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { ConflictException, HttpException, Injectable } from '@nestjs/common';
 import { Cardapio } from './model/cardapio';
 import { DateService } from './date.service';
 import { PrismaService } from 'src/database/prisma.service';
@@ -257,7 +257,20 @@ export class CardapioService {
   }
 
   async create(cardapio: Cardapio): Promise<void> {
-
+    const existingCardapios = await this.prisma.cardapio.findMany({
+      where: {
+        AND: [
+          { data: cardapio.data },
+          { periodo: cardapio.periodo? 1: 0},
+          { vegetariano: cardapio.vegetariano? 1 : 0}
+        ]
+      }
+    });
+  
+    if (existingCardapios.length > 0) {
+      throw new ConflictException('Cardápio já cadastrado!');
+    }
+  
     try {
       await this.prisma.cardapio.create({
         data: {
@@ -266,19 +279,20 @@ export class CardapioService {
           salada: cardapio.salada,
           sobremesa: cardapio.sobremesa,
           suco: cardapio.suco,
-          periodo: cardapio.periodo? 1 : 0,
-          vegetariano: cardapio.vegetariano? 1 : 0,
+          periodo: cardapio.periodo ? 1 : 0,
+          vegetariano: cardapio.vegetariano ? 1 : 0,
           data: cardapio.data,
         },
       });
     } catch (error) {
       if (error.code === 'ER_DUP_ENTRY') {
-        throw new HttpException('Cardápio já cadastrado',409);
+        throw new HttpException('Cardápio já cadastrado', 409);
       } else {
         throw error;
       }
     }
   }
+  
 
   async update(cardapio: Cardapio): Promise<void> {
 
