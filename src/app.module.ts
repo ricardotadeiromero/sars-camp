@@ -12,11 +12,23 @@ import { ConfigModule } from '@nestjs/config';
 import { AchadosPerdidosModule } from './achados_perdidos/achados_perdidos.module';
 
 @Module({
-  imports: [UserModule, AuthModule, CardapioModule, AlunoModule, SaldoModule, AchadosPerdidosModule,ConfigModule.forRoot({isGlobal: true}), AchadosPerdidosModule],
+  imports: [
+    UserModule,
+    AuthModule,
+    CardapioModule,
+    AlunoModule,
+    SaldoModule,
+    AchadosPerdidosModule,
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
+    AchadosPerdidosModule,
+  ],
   controllers: [AppController],
-  providers: [AppService,{
-    provide: APP_GUARD,
-    useClass: JwtAuthGuard,
-  }],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}
