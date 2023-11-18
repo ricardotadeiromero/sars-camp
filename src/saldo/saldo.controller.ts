@@ -4,7 +4,9 @@ import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { Aluno } from 'src/aluno/model/aluno';
 import { JwtAlunoAuthGuard } from 'src/auth/guards/aluno/jwt-aluno-auth.guard';
 import { CurrentAluno } from 'src/auth/decorators/current-aluno.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('saldo')
 @Controller('saldo')
 export class SaldoController {
   constructor(private readonly saldoService: SaldoService) {}

@@ -42,4 +42,12 @@ export class AchadosPerdidosService {
             }
         });
     }
+
+    async delete(id: number): Promise<a_p> {
+        return await this.prisma.achadios_perdidos.delete({
+            where: {
+                id: id,
+            }
+        });
+    }
 }

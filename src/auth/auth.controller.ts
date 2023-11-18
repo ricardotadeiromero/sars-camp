@@ -16,7 +16,9 @@ import { AuthRequest } from 'src/user/model/authRequest';
 import { PassThrough } from 'stream';
 import { LocalAlunoAuthGuard } from './guards/aluno/local-aluno-auth.guard';
 import { AuthAlunoRequest } from 'src/aluno/model/authAlunoRequest';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
