@@ -38,19 +38,19 @@ export class Cardapio {
   })
   suco: string;
   @ApiProperty({
-    type: String,
+    type: Number,
     description: 'Período do cardápio, 0 para almoço e 1 para janta',
     example: 0,
   })
   periodo: number;
   @ApiProperty({
-    type: String,
+    type: Number,
     description: 'Tipo do cardápio, 0 para comum e 1 para vegetariano',
     example: 0,
   })
   vegetariano: number;
   @ApiProperty({
-    type: String,
+    type: Date,
     description: 'Dia relativo ao cardápio a ser cadastrado',
     example: '2023-06-06 00:00:00',
   })

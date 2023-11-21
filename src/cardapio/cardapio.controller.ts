@@ -16,6 +16,10 @@ import { Cardapio } from './model/cardapio';
 import { JwtAuthGuard } from 'src/auth/guards/user/jwt-auth.guard';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import {
+  ApiNotFoundResponse,
+  ApiConflictResponse,
+  ApiCreatedResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiProperty,
   ApiTags,
@@ -34,6 +38,12 @@ export class CardapioController {
     summary:
       'Busca todos os cardápios do dia atual, porém apenas usuários autenticados podem acessar essa rota',
   })
+  @ApiNotFoundResponse({
+    description: 'Cardápios não encontrados',
+  })
+  @ApiOkResponse({
+    description: 'Sucesso!',
+  })
   @Get('hoje')
   async getCardapioHoje(): Promise<Cardapio> {
     return await this.cardapioService.cardapioHoje();
@@ -44,6 +54,12 @@ export class CardapioController {
   @ApiOperation({
     summary:
       'Busca todos os cardápios da semana, rota pública para todos acessarem',
+  })
+  @ApiNotFoundResponse({
+    description: 'Cardápios não encontrados',
+  })
+  @ApiOkResponse({
+    description: 'Sucesso!',
   })
   @IsPublic()
   @Get('semana')
@@ -57,6 +73,12 @@ export class CardapioController {
     summary:
       'Busca todos os cardápios do mês, porém apenas usuários autenticados podem acessar essa rota',
   })
+  @ApiNotFoundResponse({
+    description: 'Cardápios não encontrados',
+  })
+  @ApiOkResponse({
+    description: 'Sucesso!',
+  })
   @Get('mes')
   async getCardapiosMes(): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
     return await this.cardapioService.cardapiosMes();
@@ -69,6 +91,12 @@ export class CardapioController {
     summary:
       'Busca todos os cardápios do ano, porém apenas usuários autenticados podem acessar essa rota',
   })
+  @ApiNotFoundResponse({
+    description: 'Cardápios não encontrados',
+  })
+  @ApiOkResponse({
+    description: 'Sucesso!',
+  })
   @Get('ano')
   async getCardapiosAno(): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
     return await this.cardapioService.cardapiosAno();
@@ -80,6 +108,12 @@ export class CardapioController {
     summary:
       'Busca todos os cardápios da semana da data referente, porém apenas usuários autenticados podem acessar essa rota',
   })
+  @ApiNotFoundResponse({
+    description: 'Cardápios não encontrados',
+  })
+  @ApiOkResponse({
+    description: 'Sucesso!',
+  })
   @Get('semana/data/:date')
   async getCardapiosBySemana(
     @Param('date') date: Date,
@@ -90,6 +124,12 @@ export class CardapioController {
   @ApiOperation({
     summary:
       'Busca todos os cardápios da semana referente, rota pública para todos acessarem',
+  })
+  @ApiNotFoundResponse({
+    description: 'Cardápios não encontrados',
+  })
+  @ApiOkResponse({
+    description: 'Sucesso!',
   })
   @IsPublic()
   @Get('semana/:week')
@@ -104,6 +144,12 @@ export class CardapioController {
     summary:
       'Busca todos os cardápios da data referente, porém apenas usuários autenticados podem acessar essa rota',
   })
+  @ApiNotFoundResponse({
+    description: 'Cardápios não encontrados',
+  })
+  @ApiOkResponse({
+    description: 'Sucesso!',
+  })
   @Get('date/:date')
   async getCardapioByDate(@Param('date') date: Date): Promise<Cardapio> {
     return await this.cardapioService.findByDate(new Date(date));
@@ -116,6 +162,12 @@ export class CardapioController {
     summary:
       'Busca todos os cardápios do dia referente ao mês atual, porém apenas usuários autenticados podem acessar essa rota',
   })
+  @ApiNotFoundResponse({
+    description: 'Cardápios não encontrados',
+  })
+  @ApiOkResponse({
+    description: 'Sucesso!',
+  })
   @Get('dia/:day')
   async getCardapioByDay(@Param('day') day: number): Promise<Cardapio> {
     return await this.cardapioService.findByDay(day);
@@ -127,6 +179,12 @@ export class CardapioController {
   @ApiOperation({
     summary:
       'Busca todos os cardápios do mês referente, porém apenas usuários autenticados podem acessar essa rota',
+  })
+  @ApiNotFoundResponse({
+    description: 'Cardápios não encontrados',
+  })
+  @ApiOkResponse({
+    description: 'Sucesso!',
   })
   @Get('mes/:month')
   async getCardapiosByMonth(
@@ -142,6 +200,12 @@ export class CardapioController {
     summary:
       'Busca todos os cardápios do ano referente, porém apenas usuários autenticados podem acessar essa rota',
   })
+  @ApiNotFoundResponse({
+    description: 'Cardápios não encontrados',
+  })
+  @ApiOkResponse({
+    description: 'Sucesso!',
+  })
   @Get('ano/:year')
   async getCardapiosByYear(
     @Param('year') year: number,
@@ -155,6 +219,12 @@ export class CardapioController {
   @ApiOperation({
     summary:
       'Busca um cardápio pelo código, porém apenas usuários autenticados podem acessar essa rota',
+  })
+  @ApiNotFoundResponse({
+    description: 'Cardápios não encontrados',
+  })
+  @ApiOkResponse({
+    description: 'Sucesso!',
   })
   @Get(':codigo')
   async getCardapioByCodigo(
@@ -170,6 +240,12 @@ export class CardapioController {
     summary:
       'Busca todos os cardápios, porém apenas usuários autenticados podem acessar essa rota',
   })
+  @ApiNotFoundResponse({
+    description: 'Cardápios não encontrados',
+  })
+  @ApiOkResponse({
+    description: 'Sucesso!',
+  })
   @Get()
   async getAllCardapios(): Promise<Cardapio[]> {
     return await this.cardapioService.findAll();
@@ -181,6 +257,12 @@ export class CardapioController {
   @ApiOperation({
     summary:
       'Cria um cardápio, porém apenas usuários autenticados podem acessar essa rota',
+  })
+  @ApiConflictResponse({
+    description: 'Falha!',
+  })
+  @ApiCreatedResponse({
+    description: 'Sucesso!',
   })
   @Post()
   async createCardapio(@Body() cardapio: Cardapio): Promise<void> {
@@ -194,11 +276,23 @@ export class CardapioController {
     summary:
       'Atualiza um cardápio, porém apenas usuários autenticados podem acessar essa rota',
   })
+  @ApiNotFoundResponse({
+    description: 'Cardápio não encontrado!',
+  })
+  @ApiOkResponse({
+    description: 'Sucesso!',
+  })
   @Put()
   async updateCardapio(@Body() cardapio: Cardapio): Promise<void> {
     return await this.cardapioService.update(cardapio);
   }
 
+  @ApiNotFoundResponse({
+    description: 'Cardápio não encontrado!',
+  })
+  @ApiOkResponse({
+    description: 'Sucesso!',
+  })
   @ApiUnauthorizedResponse({
     description: 'Unauthorized',
   })
