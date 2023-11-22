@@ -1,4 +1,9 @@
-import { ConflictException, HttpException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  HttpException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Cardapio } from './model/cardapio';
 import { DateService } from './date.service';
 import { PrismaService } from 'src/database/prisma.service';
@@ -6,7 +11,10 @@ import { format } from 'date-fns';
 
 @Injectable()
 export class CardapioService {
-  constructor(private prisma: PrismaService, private date: DateService) {}
+  constructor(
+    private prisma: PrismaService,
+    private date: DateService,
+  ) {}
 
   async cardapioHoje(): Promise<Cardapio> {
     const today = new Date();
@@ -19,7 +27,7 @@ export class CardapioService {
     });
 
     if (!cardapio) {
-      throw new HttpException('Não há cardápios para hoje',404);
+      throw new HttpException('Não há cardápios para hoje', 404);
     }
 
     return cardapio;
@@ -39,7 +47,7 @@ export class CardapioService {
     });
 
     if (!cardapios.length) {
-      throw new HttpException('Não há cardápios nesta semana',404);
+      throw new HttpException('Não há cardápios nesta semana', 404);
     }
 
     return this.date.toArray(cardapios);
@@ -59,8 +67,7 @@ export class CardapioService {
     });
 
     if (!cardapios.length) {
-      throw new HttpException('Não há cardápios neste mês',      404
-      );
+      throw new HttpException('Não há cardápios neste mês', 404);
     }
 
     return this.date.addToMonth(cardapios);
@@ -80,9 +87,7 @@ export class CardapioService {
     });
 
     if (!cardapios.length) {
-      throw new HttpException('Não há cardápios neste ano',
-         404,
-      );
+      throw new HttpException('Não há cardápios neste ano', 404);
     }
 
     return this.date.addToYear(cardapios);
@@ -106,14 +111,13 @@ export class CardapioService {
     });
 
     if (!cardapios.length) {
-      throw new HttpException('Cardápios não encontrados',404);
+      throw new HttpException('Cardápios não encontrados', 404);
     }
 
     return this.date.addToWeek(cardapios);
   }
 
-  async findByWeek(week: number): Promise<(Cardapio[])[]> {
-
+  async findByWeek(week: number): Promise<Cardapio[][]> {
     const cardapios = await this.prisma.cardapio.findMany({
       where: {
         AND: [
@@ -127,7 +131,7 @@ export class CardapioService {
     });
 
     if (!cardapios.length) {
-      throw new HttpException('Cardápios não encontrados',404 );
+      throw new HttpException('Cardápios não encontrados', 404);
     }
 
     return this.date.toArray(cardapios);
@@ -161,7 +165,7 @@ export class CardapioService {
     });
 
     if (!cardapio) {
-      throw new HttpException('Cardápio não encontrado',404);
+      throw new HttpException('Cardápio não encontrado', 404);
     }
 
     return cardapio;
@@ -172,18 +176,19 @@ export class CardapioService {
 
     const cardapio = await this.prisma.cardapio.findFirst({
       where: {
-        data: format(date,"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"),
+        data: format(date, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"),
       },
     });
     if (!cardapio) {
-      throw new HttpException('Cardápio não encontrado',
-        404);
+      throw new HttpException('Cardápio não encontrado', 404);
     }
 
     return cardapio;
   }
 
-  async findByMonth(month: number): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
+  async findByMonth(
+    month: number,
+  ): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
     const cardapios = await this.prisma.cardapio.findMany({
       where: {
         AND: [
@@ -207,7 +212,9 @@ export class CardapioService {
     return this.date.addToMonth(cardapios);
   }
 
-  async findByYear(year: number): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
+  async findByYear(
+    year: number,
+  ): Promise<(Cardapio[] | 'feriado' | undefined)[]> {
     const cardapios = await this.prisma.cardapio.findMany({
       where: {
         data: {
@@ -221,8 +228,7 @@ export class CardapioService {
     });
 
     if (!cardapios.length) {
-
-      throw new HttpException('Cardápios não encontrados',404);
+      throw new HttpException('Cardápios não encontrados', 404);
     }
 
     return this.date.addToYear(cardapios);
@@ -236,7 +242,7 @@ export class CardapioService {
     });
 
     if (!cardapio) {
-      throw new HttpException('Cardápio não encontrado', 404 );
+      throw new HttpException('Cardápio não encontrado', 404);
     }
 
     return cardapio;
@@ -250,7 +256,7 @@ export class CardapioService {
     });
 
     if (!cardapios.length) {
-      throw new HttpException('Cardápios não encontrados',404);
+      throw new HttpException('Cardápios não encontrados', 404);
     }
 
     return cardapios;
@@ -261,16 +267,16 @@ export class CardapioService {
       where: {
         AND: [
           { data: cardapio.data },
-          { periodo: cardapio.periodo? 1: 0},
-          { vegetariano: cardapio.vegetariano? 1 : 0}
-        ]
-      }
+          { periodo: cardapio.periodo ? 1 : 0 },
+          { vegetariano: cardapio.vegetariano ? 1 : 0 },
+        ],
+      },
     });
-  
+
     if (existingCardapios.length > 0) {
       throw new ConflictException('Cardápio já cadastrado!');
     }
-  
+
     try {
       await this.prisma.cardapio.create({
         data: {
@@ -292,11 +298,8 @@ export class CardapioService {
       }
     }
   }
-  
 
   async update(cardapio: Cardapio): Promise<void> {
-
-
     try {
       await this.prisma.cardapio.update({
         where: {
@@ -308,17 +311,13 @@ export class CardapioService {
           salada: cardapio.salada,
           sobremesa: cardapio.sobremesa,
           suco: cardapio.suco,
-          periodo: cardapio.periodo? 1 : 0,
-          vegetariano: cardapio.vegetariano? 1 : 0,
+          periodo: cardapio.periodo ? 1 : 0,
+          vegetariano: cardapio.vegetariano ? 1 : 0,
           data: cardapio.data,
         },
       });
     } catch (error) {
-      if (error.code === 'ER_DUP_ENTRY') {
-        throw new HttpException('Falha!', 409);
-      } else {
-        throw error;
-      }
+      throw new NotFoundException('Cardápio não encontrado');
     }
   }
 
@@ -330,11 +329,7 @@ export class CardapioService {
         },
       });
     } catch (error) {
-      if (error.code === 'ER_DUP_ENTRY') {
-        throw new HttpException('Falha!', 409);
-      } else {
-        throw error;
-      }
+      throw new NotFoundException('Cardápio não encontrado');
     }
   }
 }

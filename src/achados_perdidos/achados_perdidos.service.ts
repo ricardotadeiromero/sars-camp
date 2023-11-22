@@ -33,13 +33,29 @@ export class AchadosPerdidosService {
     }
 
     async update(id: number, data: a_p): Promise<a_p> {
-        return await this.prisma.achadios_perdidos.update({
-            where: {
-                id: id,
-            },
-            data: {
-                ...data,
-            }
-        });
+        try {
+            return await this.prisma.achadios_perdidos.update({
+                where: {
+                    id: id,
+                },
+                data: {
+                    ...data,
+                }
+            });
+        } catch(error) {
+            throw new NotFoundException('Item não encontrado!');
+        }
+    }
+
+    async delete(id: number): Promise<a_p> {
+        try{
+            return await this.prisma.achadios_perdidos.delete({
+                where: {
+                    id: id,
+                }
+            });
+        } catch(error) {
+            throw new NotFoundException('Item não encontrado!');
+        }
     }
 }

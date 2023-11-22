@@ -9,14 +9,10 @@ import { JwtAuthGuard } from './auth/guards/user/jwt-auth.guard';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+  @IsPublic()
   @Get()
   getHello(): string {
     return this.appService.getHello();
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('me')
-  getMe(@CurrentUser() user: User): User {
-    return user;
-  }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 
 @Injectable()
@@ -9,6 +9,9 @@ export class SaldoService {
         const saldo = await this.prisma.saldo.findUnique({
             where: {id}
         })
+        if(!saldo){
+            throw new BadRequestException('Saldo não encontrado');
+        }
         return saldo.saldo;
     }
 }
