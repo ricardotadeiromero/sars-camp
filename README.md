@@ -1,73 +1,80 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# SARsCamp - API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Visão Geral📚
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Esta API foi desenvolvida em NestJS, utilizando mySQL como banco de dados e a biblioteca Prisma como ORM para fazer as solicitações de acesso a banco.
 
-## Description
+## Pré-Requisitos para rodar a API
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- [Node.js](https://nodejs.org/en/docs)
+- [Docker](https://www.docker.com/) (opcional)
 
-## Installation
+# Informações Técnicas🛠️
 
-```bash
-$ npm install
+Esta seção é destinada a desenvolvedores.
+
+## Instalação do framework e suas depedências⚙️
+
+- Primeiramente após clonar o projeto use o comando:
+
+```
+cd sars-camp
 ```
 
-## Running the app
+- Ao entrar no projeto utilize o comando para instalar as dependências.
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```
+npm install
 ```
 
-## Test
+- Em seguida será necessário criar um arquivo **.env** para as credenciais do banco de dados. Dentro do arquivo **.env** insira esta linha com as suas credenciais:
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```
+DATABASE_URL=mysl://USER:PASSWORD@HOST:PORT/DATABASE
 ```
 
-## Support
+- Será necessário também adicionar um segredo para o os tokens de autenticação presentes na API. Para isso no arquivo **.env** adicione esta linha:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
+JWT_SECRET=segredo
+```
 
-## Stay in touch
+- Será necessário utilizar o Prisma para fazer o mapeamento do banco de dados. Para isso você pode fazer uma migration desses respectivos bancos, utilizando este comando:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```
+npx prisma migrate dev
+```
 
-## License
+- Para finalizar será necessário gerar de fato o cliente Prisma para utilizá-lo no projeto. Fazemos isso com esse comando:
 
-Nest is [MIT licensed](LICENSE).
+```
+npx prisma generate
+```
+
+## Rodando o projeto 🚀
+
+- Para inciar o projeto como desenvolvedor basta utilizar o comando:
+
+```
+npm run start:dev
+```
+
+- Ele começará a rodar a API no localhost na porta 3000.
+
+## Docker 📦
+
+- A API possui um Dockerfile, ou seja, caso deseje colocar em ambiente de produção, seria muito interessante utilizar do Docker.
+- Para isso primeiramente é necessário tê-lo em sua máquina. Para baixar basta entrar no site [Docker](https://www.docker.com/) e ver como instalá-lo em sua máquina.
+- Após instalar o Docker basta rodar o comando abaixo para criar a imagem:
+
+```
+docker build -t nome-da-imagem .
+```
+
+- Em seguida para rodar o projeto digite o comando:
+
+```
+dokcer run -p80:3000 nome-da-imagem
+```
+
+> Com isso a API estará rodando no localhost, porém sem nenhuma porta específica.
