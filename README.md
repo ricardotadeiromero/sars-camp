@@ -61,6 +61,14 @@ npm run start:dev
 
 - Ele começará a rodar a API no localhost na porta 3000.
 
+## Documentação das rotas
+
+- Para acessar a documentação das rotas feitas por meio da biblioteca Swagger basta entrar na rota:
+
+```
+http://localhost:3000/api
+```
+
 ## Docker 📦
 
 - A API possui um Dockerfile, ou seja, caso deseje colocar em ambiente de produção, seria muito interessante utilizar do Docker.
