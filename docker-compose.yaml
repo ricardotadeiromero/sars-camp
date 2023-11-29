@@ -1,0 +1,7 @@
+
+version: '1'
+services:
+  backend:
+    image: sars-camp
+    ports:
+     - 3000:3000
