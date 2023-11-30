@@ -76,13 +76,14 @@ http://localhost:3000/api
 - Após instalar o Docker basta rodar o comando abaixo para criar a imagem:
 
 ```
-docker build -t nome-da-imagem .
+docker build -t sars-camp .
 ```
 
 - Em seguida para rodar o projeto digite o comando:
 
 ```
-dokcer run -p80:3000 nome-da-imagem
+docker-compose up
 ```
 
-> Com isso a API estará rodando no localhost, porém sem nenhuma porta específica.
+> Com isso a API estará rodando na porta 3000. Vale ressaltar que é necessário fazer a configuração do prisma antes de iniciar o docker.
+

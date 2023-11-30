@@ -15,4 +15,13 @@ export class UserService {
     console.log(user);
     return user;
     }
+
+    async createUser(user: User): Promise<User>{
+        const salt = await bcrypt.genSalt();
+        user.password = await bcrypt.hash(user.password, salt);
+        const newUser = await this.prisma.user.create({
+            data: user
+        });
+        return newUser;
+    }
 }
