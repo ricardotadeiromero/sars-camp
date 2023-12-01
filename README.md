@@ -30,7 +30,7 @@ npm install
 - Em seguida será necessário criar um arquivo **.env** para as credenciais do banco de dados. Dentro do arquivo **.env** insira esta linha com as suas credenciais:
 
 ```
-DATABASE_URL=mysl://USER:PASSWORD@HOST:PORT/DATABASE
+DATABASE_URL=mysql://USER:PASSWORD@HOST:PORT/DATABASE
 ```
 
 - Será necessário também adicionar um segredo para o os tokens de autenticação presentes na API. Para isso no arquivo **.env** adicione esta linha:
